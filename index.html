@@ -1,0 +1,1712 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full overflow-hidden">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Untuk Sayangku, di Hari Spesialmu 🤍</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Cormorant Garamond, Sacramento, & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Sacramento&display=swap"
+        rel="stylesheet">
+
+    <!-- Canvas Confetti & GSAP -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        script: ['"Sacramento"', 'cursive'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        romantic: {
+                            950: '#100a0e',
+                            900: '#1a1217',
+                            850: '#22171f',
+                            800: '#2b1d27',
+                            700: '#3e2a38',
+                            gold: '#d4af37',
+                            rose: '#e89da8',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Lock screen from manual outer scrolling - strictly separated pages */
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: radial-gradient(circle at 50% 25%, #2d1c27 0%, #1a1217 65%, #0f090d 100%);
+            color: #f5eaef;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-box {
+            background: rgba(36, 23, 32, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.7), 0 0 25px rgba(232, 157, 168, 0.05);
+        }
+
+        /* 3D Flip Polaroid Card */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+
+        .transform-style-3d {
+            transform-style: preserve-3d;
+        }
+
+        .backface-hidden {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+
+        /* Polaroid Frame */
+        .polaroid-frame {
+            background: #ffffff;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .polaroid-wrapper {
+            transition: transform 0.3s ease;
+        }
+
+        .polaroid-wrapper:hover {
+            transform: translateY(-4px);
+        }
+
+        /* Candle Flame Animation */
+        @keyframes flameGlow {
+
+            0%,
+            100% {
+                transform: scale(1) rotate(-1deg);
+                filter: drop-shadow(0 0 10px #f59e0b) drop-shadow(0 0 22px #e89da8);
+            }
+
+            50% {
+                transform: scale(1.08, 0.94) rotate(1.5deg);
+                filter: drop-shadow(0 0 14px #fbbf24) drop-shadow(0 0 30px #f43f5e);
+            }
+        }
+
+        .flame-active {
+            animation: flameGlow 1.8s infinite ease-in-out;
+            transform-origin: bottom center;
+        }
+
+        /* Typewriter Cursor */
+        .typewriter-cursor::after {
+            content: '|';
+            animation: blinkCursor 0.9s infinite;
+            color: #d4af37;
+        }
+
+        @keyframes blinkCursor {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* Floating Hearts Animation for Mini Game 1 */
+        @keyframes gentleFloat {
+
+            0%,
+            100% {
+                transform: translateY(0px) scale(1);
+            }
+
+            50% {
+                transform: translateY(-12px) scale(1.06);
+            }
+        }
+
+        .heart-float {
+            animation: gentleFloat 3s infinite ease-in-out;
+        }
+
+        /* Audio Visualizer Waves */
+        @keyframes barPulse {
+
+            0%,
+            100% {
+                height: 4px;
+            }
+
+            50% {
+                height: 14px;
+            }
+        }
+
+        .audio-bar:nth-child(1) {
+            animation: barPulse 1.2s infinite ease-in-out 0.1s;
+        }
+
+        .audio-bar:nth-child(2) {
+            animation: barPulse 1.2s infinite ease-in-out 0.4s;
+        }
+
+        .audio-bar:nth-child(3) {
+            animation: barPulse 1.2s infinite ease-in-out 0.2s;
+        }
+
+        /* Page 1 scrollable */
+        #page-1 {
+            overflow-y: auto;
+            max-height: calc(100vh - 7rem);
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Custom delicate scrollbar */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 9999px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(232, 157, 168, 0.35);
+            border-radius: 9999px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(212, 175, 55, 0.6);
+        }
+    </style>
+</head>
+
+<body class="h-full w-full flex flex-col justify-between relative select-none">
+
+    <!-- ================= AMBIENT BACKGROUND GLOW ================= -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div class="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-rose-500/15 blur-3xl"></div>
+        <div class="absolute top-1/2 -right-32 w-[450px] h-[450px] rounded-full bg-romantic-gold/10 blur-3xl"></div>
+        <canvas id="ambientStars" class="w-full h-full opacity-35"></canvas>
+    </div>
+
+    <!-- ================= FLOATING HEADER BAR ================= -->
+    <header class="fixed top-4 inset-x-0 z-50 px-4 sm:px-8 flex items-center justify-between pointer-events-none">
+        <!-- Step Indicator -->
+        <div class="pointer-events-auto">
+            <div
+                class="bg-black/50 backdrop-blur-xl px-4 py-1.5 rounded-full border border-white/10 shadow-lg flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-rose-400 animate-ping"></span>
+                <span id="page-indicator"
+                    class="text-[11px] sm:text-xs text-rose-200 tracking-wider font-light uppercase">
+                    pembuka kado 🎁
+                </span>
+            </div>
+        </div>
+
+        <!-- Audio Player Toggle -->
+        <div class="pointer-events-auto flex items-center gap-2">
+            <button onclick="toggleMusic()" id="musicBtn"
+                class="bg-black/50 backdrop-blur-xl border border-white/15 px-4 py-2 rounded-full flex items-center gap-2.5 text-xs text-rose-100 hover:border-romantic-gold/60 transition shadow-lg active:scale-95 cursor-pointer"
+                title="Putar / Hentikan Musik">
+                <span id="musicIcon" class="text-sm">🎵</span>
+                <span id="musicText" class="hidden sm:inline font-light">Music Off</span>
+                <div id="audioWave" class="hidden flex items-end gap-0.5 h-3">
+                    <span class="w-0.5 bg-rose-300 audio-bar rounded-full"></span>
+                    <span class="w-0.5 bg-rose-400 audio-bar rounded-full"></span>
+                    <span class="w-0.5 bg-rose-300 audio-bar rounded-full"></span>
+                </div>
+            </button>
+        </div>
+    </header>
+
+    <!-- Romantic Background Music -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="lagu.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- Lightbox Modal for Full Photo Viewing -->
+    <div id="photo-modal"
+        class="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md hidden items-center justify-center p-4 cursor-pointer"
+        onclick="closePhotoModal()">
+        <div class="relative max-w-lg w-full max-h-[85vh] flex flex-col items-center" onclick="event.stopPropagation()">
+            <img id="photo-modal-img" src="" alt="Foto Kenangan"
+                class="max-w-full max-h-[75vh] object-contain rounded-2xl border border-white/20 shadow-2xl">
+            <p id="photo-modal-caption" class="text-xs text-rose-200/90 mt-3 font-serif text-center italic px-4"></p>
+            <button onclick="closePhotoModal()"
+                class="absolute -top-10 right-0 text-white/80 hover:text-white text-xl font-light cursor-pointer">&times;
+                Tutup</button>
+        </div>
+    </div>
+
+
+    <!-- ================= MAIN MULTI-PAGE CONTAINER ================= -->
+    <main class="relative z-10 w-full h-full flex items-center justify-center px-4 sm:px-6 pt-16 pb-8">
+
+        <!-- ======================================================== -->
+        <!-- HALAMAN 1: GATE & COUNTDOWN REAL-TIME KE 16 NOVEMBER     -->
+        <!-- ======================================================== -->
+        <section id="page-1" class="page-screen w-full max-w-md flex flex-col items-center text-center">
+            <div class="glass-box p-7 sm:p-9 rounded-3xl border border-white/10 w-full relative" style="padding-bottom: 2.5rem;">
+
+                <p class="text-[11px] uppercase tracking-[0.35em] text-rose-300/80 mb-2 font-medium">
+                    ✦ SPECIAL DAY FOR SAYANGKU ✦
+                </p>
+
+                <h1 class="font-serif text-3xl sm:text-4xl text-rose-50 font-normal leading-tight mb-3">
+                    Hitung Mundur Menuju Hari Bahagia kamuu sayang
+                </h1>
+
+                <p class="text-xs sm:text-sm text-stone-300 font-light mb-6">
+                    Waktu terus berjalan, dan setiap detiknya selalu membawaku lebih dekat ke hari paling istimewa
+                    untukmu.
+                </p>
+
+                <!-- Real-Time Countdown Target: November 16 -->
+                <div class="grid grid-cols-4 gap-2 mb-7 text-center">
+                    <div class="bg-black/30 border border-white/10 rounded-2xl p-2.5 sm:p-3">
+                        <span id="timer-days"
+                            class="font-serif text-2xl sm:text-3xl text-rose-100 block font-light">00</span>
+                        <span class="text-[10px] text-stone-400 uppercase tracking-widest">Hari</span>
+                    </div>
+                    <div class="bg-black/30 border border-white/10 rounded-2xl p-2.5 sm:p-3">
+                        <span id="timer-hours"
+                            class="font-serif text-2xl sm:text-3xl text-rose-100 block font-light">00</span>
+                        <span class="text-[10px] text-stone-400 uppercase tracking-widest">Jam</span>
+                    </div>
+                    <div class="bg-black/30 border border-white/10 rounded-2xl p-2.5 sm:p-3">
+                        <span id="timer-minutes"
+                            class="font-serif text-2xl sm:text-3xl text-rose-100 block font-light">00</span>
+                        <span class="text-[10px] text-stone-400 uppercase tracking-widest">Menit</span>
+                    </div>
+                    <div class="bg-black/30 border border-white/10 rounded-2xl p-2.5 sm:p-3">
+                        <span id="timer-seconds"
+                            class="font-serif text-2xl sm:text-3xl text-romantic-gold block font-light">00</span>
+                        <span class="text-[10px] text-stone-400 uppercase tracking-widest">Detik</span>
+                    </div>
+                </div>
+
+                <!-- Interactive Glowing Gift Box -->
+                <div class="relative py-2 flex flex-col items-center">
+                    <button id="gift-box-btn" onclick="unlockGiftGate()"
+                        disabled
+                        class="group relative inline-flex flex-col items-center justify-center p-6 rounded-3xl bg-gradient-to-b from-rose-900/40 to-black/60 border border-romantic-gold/40 transition-all duration-500 shadow-2xl opacity-50 cursor-not-allowed pointer-events-none">
+                        <div class="text-6xl mb-2 transition-transform duration-300">
+                            🎁
+                        </div>
+                        <span class="font-serif text-base text-rose-100 transition">
+                            Buka Kotak Kejutan 🤍
+                        </span>
+                        <span class="text-[11px] text-stone-400 mt-1 font-light">
+                            (sentuh di sini untuk memulai petualangan kecil kita)
+                        </span>
+                    </button>
+                    <p id="gift-lock-msg" class="text-xs text-stone-400 mt-3 font-light italic">
+                        Sabar ya sayangku, belum saatnya... 🔒
+                    </p>
+                </div>
+
+                <!-- Best Part Song Explanation Box -->
+                <div class="mt-5 p-4 rounded-2xl text-left" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(212,175,55,0.28);">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-romantic-gold text-base">🎵</span>
+                        <span class="text-[10px] uppercase tracking-widest font-semibold text-romantic-gold">Kenapa Lagu Ini?</span>
+                    </div>
+                    <p class="font-serif text-sm text-rose-100 leading-relaxed italic">
+                        "Alasan aku kenapa memilih lagu ini, karna kamu adalah best part dalam hidup aku sayang, dan rasanya aku senang banget setiap denger lagu ini karna kamu memang bagian terbaik dalam hidup akuu sayang, enjoyyy yaaaa...."
+                    </p>
+                    <span class="block mt-2 text-[10px] text-stone-400 font-light">— Best Part, Daniel Caesar ft. H.E.R.</span>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- ======================================================== -->
+        <!-- HALAMAN 2: GAME 1 - TANGKAP 5 HATI (CATCH THE 5 HEARTS)  -->
+        <!-- ======================================================== -->
+        <section id="page-2" class="page-screen w-full max-w-md hidden flex-col items-center text-center">
+            <div class="glass-box p-7 sm:p-9 rounded-3xl border border-white/10 w-full relative">
+
+                <div class="flex items-center justify-between pb-3 mb-4 border-b border-white/10 text-xs">
+                    <span class="text-rose-300 tracking-[0.2em] uppercase font-medium">Tantangan 1</span>
+                    <span id="hearts-counter" class="text-romantic-gold font-serif text-sm">0 / 5 Hati</span>
+                </div>
+
+                <h2 class="font-serif text-3xl text-rose-50 font-normal mb-2">
+                    Tangkap 5 Hatiku 💖
+                </h2>
+
+                <p class="text-xs text-stone-300 font-light mb-6">
+                    Hati aku selalu beterbangan ke kamu. Pencet dan kumpulin semua 5 hati di bawah ini ya sayangku
+                </p>
+
+                <!-- Floating Hearts Area -->
+                <div id="hearts-field"
+                    class="relative w-full h-56 bg-black/30 rounded-2xl border border-white/10 overflow-hidden mb-5">
+                    <button onclick="catchHeart(this)"
+                        class="heart-target absolute top-6 left-8 text-3xl heart-float cursor-pointer hover:scale-125 transition"
+                        style="animation-delay: 0.2s;">💖</button>
+                    <button onclick="catchHeart(this)"
+                        class="heart-target absolute top-12 right-10 text-3xl heart-float cursor-pointer hover:scale-125 transition"
+                        style="animation-delay: 0.7s;">💘</button>
+                    <button onclick="catchHeart(this)"
+                        class="heart-target absolute bottom-8 left-14 text-3xl heart-float cursor-pointer hover:scale-125 transition"
+                        style="animation-delay: 1.1s;">💕</button>
+                    <button onclick="catchHeart(this)"
+                        class="heart-target absolute bottom-12 right-12 text-3xl heart-float cursor-pointer hover:scale-125 transition"
+                        style="animation-delay: 0.4s;">💓</button>
+                    <button onclick="catchHeart(this)"
+                        class="heart-target absolute top-24 left-1/2 -translate-x-1/2 text-3xl heart-float cursor-pointer hover:scale-125 transition"
+                        style="animation-delay: 0.9s;">💗</button>
+                </div>
+
+                <!-- Success Box -->
+                <div id="game-1-success" class="hidden mt-4 pt-4 border-t border-white/10 animate-fade">
+                    <p class="font-serif text-lg text-romantic-gold mb-1">yeyeyyyy Semua hati aku sudah kamu miliki </p>
+                    <p class="text-xs text-stone-300 mb-4">Sekarang mari kita tes seberapa kuat ingatan kamuu</p>
+                    <button onclick="goToPage(3)"
+                        class="w-full py-3 rounded-xl bg-gradient-to-r from-rose-900/80 via-rose-800 to-rose-950 border border-romantic-gold/60 text-xs tracking-widest uppercase text-white font-medium shadow-xl hover:scale-105 active:scale-95 transition cursor-pointer">
+                        Lanjut ke Game 2: Tebak Kata (3 Soal) &rarr;
+                    </button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ======================================================== -->
+        <!-- HALAMAN 3: GAME 2 - TEBAK KATA (3 PERTANYAAN DIKETIK)    -->
+        <!-- ======================================================== -->
+        <section id="page-3" class="page-screen w-full max-w-md hidden flex-col items-center text-center">
+            <div class="glass-box p-7 sm:p-9 rounded-3xl border border-white/10 w-full relative">
+
+                <div class="flex items-center justify-between pb-3 mb-4 border-b border-white/10 text-xs">
+                    <span id="quiz-progress" class="text-rose-300 tracking-[0.2em] uppercase font-medium">Pertanyaan 1
+                        dari 3</span>
+                    <span class="text-romantic-gold">✦ ✦ ✦</span>
+                </div>
+
+                <h2 id="quiz-question"
+                    class="font-serif text-2xl sm:text-3xl text-rose-50 font-normal leading-snug mb-3">
+                    Tempat makan favorit yang sering kita datengin dari dulu? (kalau bingung makan dimana)
+                </h2>
+
+                <p class="text-xs text-stone-300 font-light mb-5">
+                    Ketik jawabanmu dengan santai, huruf besar/kecil tidak berpengaruh ya sayangku.
+                </p>
+
+                <!-- Input Field -->
+                <div class="mb-3">
+                    <input type="text" id="quiz-input" placeholder="Ketik jawabanmu di sini..." autocomplete="off"
+                        onkeydown="if(event.key === 'Enter') checkQuizAnswer()"
+                        class="w-full bg-black/40 border border-white/20 rounded-xl px-5 py-3 text-center text-sm text-rose-50 placeholder-stone-400 focus:outline-none focus:border-romantic-gold transition-all">
+                </div>
+
+                <p id="quiz-error" class="text-xs text-rose-400 mb-2 hidden">
+                    Salah sayangku! Coba ingat-ingat lagi yang bener dong 😜
+                </p>
+
+                <p id="quiz-hint" class="text-[11px] text-stone-300 mb-3 hidden italic">
+                    <!-- Dynamic hint -->
+                </p>
+
+                <div class="flex gap-2">
+                    <button type="button" onclick="showQuizHint()"
+                        class="px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/15 rounded-xl text-xs text-stone-300 hover:text-white transition cursor-pointer">
+                        💡 Hint
+                    </button>
+                    <button onclick="checkQuizAnswer()"
+                        class="flex-1 bg-gradient-to-r from-rose-900/70 to-rose-950/90 hover:from-rose-800 hover:to-rose-900 border border-rose-500/40 py-3 rounded-xl text-xs sm:text-sm tracking-widest uppercase text-white font-medium transition-all shadow-lg active:scale-95 cursor-pointer">
+                        Kirim Jawaban ✨
+                    </button>
+                </div>
+
+                <!-- Success Box -->
+                <div id="quiz-success-box" class="hidden mt-6 pt-5 border-t border-white/10 text-center animate-fade">
+                    <p class="font-serif text-lg text-romantic-gold mb-1">Semua 3 Pertanyaan Terjawab Benar! 💯</p>
+                    <p class="text-xs text-stone-300 mb-4">Ingatan kamu tentang kita berdua selalu juara, lanjut ke
+                        tebak tempat!</p>
+                    <button onclick="goToPage(4)"
+                        class="w-full py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-romantic-gold/50 text-xs tracking-widest uppercase text-rose-100 transition cursor-pointer active:scale-95">
+                        Lanjut ke Game 3: Tebak Tempat dari Foto &rarr;
+                    </button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ======================================================== -->
+        <!-- HALAMAN 4: GAME 3 - TEBAK TEMPAT DARI FOTO (3 TEMPAT)    -->
+        <!-- ======================================================== -->
+        <section id="page-4" class="page-screen w-full max-w-md hidden flex-col items-center text-center">
+            <div class="glass-box p-7 sm:p-9 rounded-3xl border border-white/10 w-full relative">
+
+                <div class="flex items-center justify-between pb-3 mb-4 border-b border-white/10 text-xs">
+                    <span id="photo-trivia-progress" class="text-rose-300 tracking-[0.2em] uppercase font-medium">Tempat
+                        1 dari 3</span>
+                    <span class="text-romantic-gold">✦ ✦ ✦</span>
+                </div>
+
+                <h2 id="photo-trivia-title" class="font-serif text-2xl sm:text-3xl text-rose-50 font-normal mb-1">
+                    Tebak Ini Pas Kita Dimana? 🏛️ (maaf sayang foto nya ga full)
+                </h2>
+
+                <p id="photo-trivia-desc" class="text-xs text-stone-300 font-light mb-4">
+                    Clue: first date kita berdua 🤍
+                </p>
+
+                <!-- Photo Preview Card -->
+                <div
+                    class="max-w-xs mx-auto mb-4 rounded-2xl overflow-hidden border border-white/20 shadow-lg relative">
+                    <img id="photo-trivia-img" src="./images/game-place-1.jpg" alt="Tempat Kita"
+                        class="w-full h-44 object-cover object-top">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end justify-center p-2">
+                        <span id="photo-trivia-caption" class="text-[10px] text-rose-200/90 font-serif italic">"berdiri
+                            di samping dinding seni..."</span>
+                    </div>
+                </div>
+
+                <!-- Input for Typing the Location Answer -->
+                <div class="mb-3">
+                    <input type="text" id="photo-trivia-input" placeholder="Ketik nama tempatnya di sini..."
+                        autocomplete="off" onkeydown="if(event.key === 'Enter') checkPhotoTriviaAnswer()"
+                        class="w-full bg-black/40 border border-white/20 rounded-xl px-5 py-3 text-center text-sm text-rose-50 placeholder-stone-400 focus:outline-none focus:border-romantic-gold transition-all">
+                </div>
+
+                <p id="photo-trivia-error" class="text-xs text-rose-400 mb-2 hidden">
+                    Belum tepat sayangku! Coba ingat-ingat lagi nama tempatnya 😜
+                </p>
+
+                <p id="photo-trivia-hint" class="text-[11px] text-stone-300 mb-3 hidden italic">
+                    <!-- Dynamic hint -->
+                </p>
+
+                <div class="flex gap-2">
+                    <button type="button" onclick="showPhotoTriviaHint()"
+                        class="px-4 py-2.5 bg-white/5 hover:bg-white/10 border border-white/15 rounded-xl text-xs text-stone-300 hover:text-white transition cursor-pointer">
+                        💡 Hint
+                    </button>
+                    <button onclick="checkPhotoTriviaAnswer()"
+                        class="flex-1 bg-gradient-to-r from-rose-900/70 to-rose-950/90 hover:from-rose-800 hover:to-rose-900 border border-rose-500/40 py-2.5 rounded-xl text-xs sm:text-sm tracking-widest uppercase text-white font-medium transition-all shadow-lg active:scale-95 cursor-pointer">
+                        Kirim Jawaban ✨
+                    </button>
+                </div>
+
+                <!-- Success Box -->
+                <div id="photo-trivia-success-box"
+                    class="hidden mt-4 pt-4 border-t border-white/10 text-center animate-fade">
+                    <p class="font-serif text-lg text-romantic-gold mb-1">Semua 3 Tempat Berhasil Ditebak! 💖</p>
+                    <p class="text-xs text-stone-300 mb-3">Semua game selesai! Sekarang buka Memory Lane kita.</p>
+                    <button onclick="goToPage(5)"
+                        class="w-full py-3 rounded-xl bg-gradient-to-r from-rose-900/80 via-rose-800 to-rose-950 border border-romantic-gold/60 text-xs tracking-widest uppercase text-white font-medium shadow-xl hover:scale-105 active:scale-95 transition cursor-pointer">
+                        Buka Memory Lane Perjalanan Kita &rarr;
+                    </button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ======================================================== -->
+        <!-- HALAMAN 5: MEMORY LANE / TIMELINE POLAROID (9 FOTO ASLI)  -->
+        <!-- ======================================================== -->
+        <section id="page-5"
+            class="page-screen w-full max-w-4xl px-3 sm:px-6 hidden flex-col items-center justify-between text-center mx-auto">
+
+            <!-- Header Memory Lane -->
+            <div class="mb-2 sm:mb-3 shrink-0">
+                <p class="text-[10px] sm:text-[11px] uppercase tracking-[0.35em] text-rose-300/80 mb-0.5 font-medium">
+                    ✦ MEMORY LANE KITA ✦
+                </p>
+                <h2 class="font-serif text-2xl sm:text-4xl text-rose-50 font-normal">
+                    Jejak Langkah Cerita Kita
+                </h2>
+                <p class="text-[11px] sm:text-xs text-stone-300 font-light mt-0.5">
+                    Sentuh foto polaroid untuk membalik dan membaca ceritanya ya sayangku 🤍
+                </p>
+            </div>
+
+            <!-- Polaroid Grid Container (Fits 9 photos with smooth inner scroll) -->
+            <div class="w-full max-h-[58vh] sm:max-h-[62vh] overflow-y-auto overflow-x-hidden p-2 custom-scrollbar">
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5 sm:gap-4 w-full">
+
+                    <!-- FOTO 1: Photobooth ke-3 & Surprise Ultah -->
+                    <div class="polaroid-wrapper perspective-1000 cursor-pointer w-full select-none"
+                        onclick="flipPolaroid(this)">
+                        <div
+                            class="polaroid-inner relative w-full h-[330px] sm:h-[350px] rounded-2xl transform-style-3d transition-transform duration-700 shadow-xl">
+
+                            <!-- Front Card -->
+                            <div
+                                class="polaroid-front polaroid-frame absolute inset-0 rounded-2xl backface-hidden flex flex-col justify-between text-stone-800 p-2.5 sm:p-3 overflow-hidden bg-white shadow-lg">
+                                <div
+                                    class="w-full h-56 sm:h-60 rounded-xl overflow-hidden bg-stone-900 relative shrink-0">
+                                    <img src="./images/memory-1.jpg" alt="Photobooth ke 3"
+                                        class="w-full h-full object-cover object-top">
+                                    <span
+                                        class="absolute top-2 left-2 bg-black/60 text-white text-[9px] px-2 py-0.5 rounded-full backdrop-blur-sm font-medium">Bab
+                                        01</span>
+                                    <button
+                                        onclick="event.stopPropagation(); openPhotoModal('./images/memory-1.jpg', 'Photobooth ke-3 kita saat ulang tahun spesial')"
+                                        class="absolute top-2 right-2 bg-black/60 hover:bg-black/80 text-white text-[10px] p-1.5 rounded-full backdrop-blur-sm transition"
+                                        title="Lihat Foto">🔍</button>
+                                    <span
+                                        class="absolute bottom-2 right-2 bg-black/60 text-white text-[9px] px-2 py-0.5 rounded-full backdrop-blur-sm">sentuh
+                                        untuk balik 🔄</span>
+                                </div>
+                                <div
+                                    class="h-9 flex items-center justify-center text-center font-serif italic text-xs sm:text-[13px] text-stone-700 px-1 truncate w-full">
+                                    "photobooth ke-3 & surprise ultah 🎂"
+                                </div>
+                            </div>
+
+                            <!-- Back Card -->
+                            <div
+                                class="polaroid-back absolute inset-0 bg-gradient-to-br from-[#2a1a24] to-[#181116] p-3.5 sm:p-4 rounded-2xl backface-hidden rotate-y-180 flex flex-col justify-between border border-rose-300/30 text-rose-50 shadow-xl text-left overflow-hidden">
+                                <div class="flex-1 overflow-y-auto custom-scrollbar pr-1 flex flex-col justify-start">
+                                    <span
+                                        class="text-[9px] uppercase tracking-widest text-romantic-gold font-semibold">Bab
+                                        01 &bull; Momen Spesial</span>
+                                    <h4
+                                        class="font-serif text-sm sm:text-base text-rose-100 font-medium leading-tight mt-0.5">
+                                        Photobooth Ke-3 & Surprise 🎂</h4>
+                                    <p class="text-xs text-stone-200 mt-2 font-light leading-relaxed italic">
+                                        "ini photobooth ke 3 kita sayang, di hari ulang tahun yang spesial banget karna
+                                        ditemenin kamu, disini juga sekaligus aku dikasih kejutan sama kamuuuu. LUCUUUU
+                                        BANGETTTT SUKAAA"
+                                    </p>
+                                </div>
+                                <div
+                                    class="pt-2 mt-2 border-t border-white/10 flex items-center justify-around shrink-0">
+                                    <button onclick="event.stopPropagation(); triggerReactionBurst('🎂', this)"
+                                        class="hover:scale-125 transition text-lg p-1 cursor-pointer">🎂</button>
+                                    <button onclick="event.stopPropagation(); triggerReactionBurst('💖', this)"
+                                        class="hover:scale-125 transition text-lg p-1 cursor-pointer">💖</button>
+                                    <button onclick="event.stopPropagation(); triggerReactionBurst('🥺', this)"
+                                        class="hover:scale-125 transition text-lg p-1 cursor-pointer">🥺</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- FOTO 2: Waktu Kelas 11 -->
+                    <div class="polaroid-wrapper perspective-1000 cursor-pointer w-full select-none"
+                        onclick="flipPolaroid(this)">
+                        <div
+                            class="polaroid-inner relative w-full h-[330px] sm:h-[350px] rounded-2xl transform-style-3d transition-transform duration-700 shadow-xl">
+
+                            <!-- Front Card -->
+                            <div
+                                class="polaroid-front polaroid-frame absolute inset-0 rounded-2xl backface-hidden flex flex-col justify-between text-stone-800 p-2.5 sm:p-3 overflow-hidden bg-white shadow-lg">
+                                <div
+                                    class="w-full h-56 sm:h-60 rounded-xl overflow-hidden bg-stone-900 relative shrink-0">
+                                    <img src="./images/memory-2.jpg" alt="Masa Kelas 11"
+                                        class="w-full h-full object-cover object-center">
+                                    <span
+                                        class="absolute top-2 left-2 bg-black/60 text-white text-[9px] px-2 py-0.5 rounded-full backdrop-blur-sm font-medium">Bab
+                                        02</span>
+                                    <button
+                                        onclick="event.stopPropagation(); openPhotoModal('./images/memory-2.jpg', 'Foto kita saat masih kelas 11')"
+                                        class="absolute top-2 right-2 bg-black/60 hover:bg-black/80 text-white text-[10px] p-1.5 rounded-full backdrop-blur-sm transition"
+                                        title="Lihat Foto">🔍</button>
+                                    <span
+                                        class="absolute bottom-2 right-2 bg-black/60 text-white text-[9px] px-2 py-0.5 rounded-full backdrop-blur-sm">sentuh
+                                        untuk balik 🔄</span>
+                                </div>
+                                <div
+                                    class="h-9 flex items-center justify-center text-center font-serif italic text-xs sm:text-[13px] text-stone-700 px-1 truncate w-full">
+                                    "kita waktu masih kelas 11 🎒"
+                                </div>
+                            </div>
+
+                            <!-- Back Card -->
+                            <div
+                                class="polaroid-back absolute inset-0 bg-gradient-to-br from-[#2a1a24] to-[#181116] p-3.5 sm:p-4 rounded-2xl backface-hidden rotate-y-180 flex flex-col justify-between border border-rose-300/30 text-rose-50 shadow-xl text-left overflow-hidden">
+                                <div class="flex-1 overflow-y-auto custom-scrollbar pr-1 flex flex-col justify-start">
+                                    <span
+                                        class="text-[9px] uppercase tracking-widest text-romantic-gold font-semibold">Bab
+                                        02 &bull; Momen Sekolah</span>
+                                    <h4
+                                        class="font-serif text-sm sm:text-base text-rose-100 font-medium leading-tight mt-0.5">
+                                        Waktu Masih Kelas 11 🎒</h4>
+                                    <p class="text-xs text-stone-200 mt-2 font-light leading-relaxed italic">
+                                        "Ini foto kita saat masih kelas 11 sayang, gemes banget muka kita sayang kayak
+                                        anak muda bangettt, aku sedih kalau inget momen momen kita saat masih sekolah
+                                        sayangku, rinduuuuu"
+                                    </p>
+                                </div>
+                                <div
+                                    class="pt-2 mt-2 border-t border-white/10 flex items-center justify-around shrink-0">
+                                    <button onclick="event.stopPropagation(); triggerReactionBurst('🥺', this)"
+                                        class="hover:scale-125 transition text-lg p-1 cursor-pointer">🥺</button>
+                                    <button onclick="event.stopPropagation(); triggerReactionBurst('🤍', this)"
+                                        class="hover:scale-125 transition text-lg p-1 cursor-pointer">🤍</button>
+                                    <button onclick="event.stopPropagation(); triggerReactionBurst('😭', this)"
+                                        class="hover:scale-125 transition text-lg p-1 cursor-pointer">😭</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- FOTO 3: Photobooth Blok M (Melet) -->
+                    <div class="polaroid-wrapper perspective-1000 cursor-pointer w-full select-none"
+                        onclick="flipPolaroid(this)">
+                        <div
+                            class="polaroid-inner relative w-full h-[330px] sm:h-[350px] rounded-2xl transform-style-3d transition-transform duration-700 shadow-xl">
+
+                            <!-- Front Card -->
+                            <div
+                                class="polaroid-front polaroid-frame absolute inset-0 rounded-2xl backface-hidden flex flex-col justify-between text-stone-800 p-2.5 sm:p-3 overflow-hidden bg-white shadow-lg">
+                                <div
+                                    class="w-full h-56 sm:h-60 rounded-xl overflow-hidden bg-stone-900 relative shrink-0">
+                                    <img src="./images/memory-3.jpg" alt="Photobooth Blok M"
+                                        class="w-full h-full object-cover object-center">
+                                    <span
+                                        class="absolute top-2 left-2 bg-black/60 text-white text-[9px] px-2 py-0.5 rounded-full backdrop-blur-sm font-medium">Bab
+                                        03</span>
+                                    <button
+                                        onclick="event.stopPropagation(); openPhotoModal('./images/memory-3.jpg', 'Photobooth di Blok M (sok cool vs melet)')"
+                                        class="absolute top-2 right-2 bg-black/60 hover:bg-black/80 text-white text-[10px] p-1.5 rounded-full backdrop-blur-sm transition"
+                                        title="Lihat Foto">🔍</button>
+                                    <span
+                                        class="absolute bottom-2 right-2 bg-black/60 text-white text-[9px] px-2 py-0.5 rounded-full backdrop-blur-sm">sentuh
+                                        untuk balik 🔄</span>
+                                </div>
+                                <div
+                                    class="h-9 flex items-center justify-center text-center font-serif italic text-xs sm:text-[13px] text-stone-700 px-1 truncate w-full">
+                                    "photobooth blok m (melet hihhh) 😜"
+                                </div>
+                            </div>
+
+                            <!-- Back Card -->
+                            <div
+                                class="polaroid-back absolute inset-0 bg-gradient-to-br from-[#2a1a24] to-[#181116] p-3.5 sm:p-4 rounded-2xl backface-hidden rotate-y-180 flex flex-col justify-between border border-rose-300/30 text-rose-50 shadow-xl text-left overflow-hidden">
+                                <div class="flex-1 overflow-y-auto custom-scrollbar pr-1 flex flex-col justify-start">
+                                    <span
+                                        class="text-[9px] uppercase tracking-widest text-romantic-gold font-semibold">Bab
+                                        03 &bull; Photobooth Blok M</span>
+                                    <h4
+                                        class="font-serif text-sm sm:text-base text-rose-100 font-medium leading-tight mt-0.5">
+                                        Sok Cool vs Melet 😜</h4>
+                                    <p class="text-xs text-stone-200 mt-2 font-light leading-relaxed italic">
+                                        "Ini photobooth kita yang kesekian kali di blok m sayang, akuuu sukaa saja
+                                        lihatnya karnaa lucuuu gituu, kamu disini sok cool banget padahal aku sudah
+                                        melet (hihhh)"
+                                    </p>
+                                </div>
+                                <div
+                                    class="pt-2 mt-2 border-t border-white/10 flex items-center justify-around shrink-0">
+                                    <button onclick="event.stopPropagation(); triggerReactionBurst('😜', this)"
+                                        class="hover:scale-125 transition text-lg p-1 cursor-pointer">😜</button>
+                                    <button onclick="event.stopPropagation(); triggerReactionBurst('😂', this)"
+                                        class="hover:scale-125 transition text-lg p-1 cursor-pointer">😂</button>
+                                    <button onclick="event.stopPropagation(); triggerReactionBurst('🤍', this)"
+                                        class="hover:scale-125 transition text-lg p-1 cursor-pointer">🤍</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- FOTO 4: First Time ke IKEA -->
+                    <div class="polaroid-wrapper perspective-1000 cursor-pointer w-full select-none"
+                        onclick="flipPolaroid(this)">
+                        <div
+                            class="polaroid-inner relative w-full h-[330px] sm:h-[350px] rounded-2xl transform-style-3d transition-transform duration-700 shadow-xl">
+
+                            <!-- Front Card -->
+                            <div
+                                class="polaroid-front polaroid-frame absolute inset-0 rounded-2xl backface-hidden flex flex-col justify-between text-stone-800 p-2.5 sm:p-3 overflow-hidden bg-white shadow-lg">
+                                <div
+                                    class="w-full h-56 sm:h-60 rounded-xl overflow-hidden bg-stone-900 relative shrink-0">
+                                    <img src="./images/memory-4.jpg" alt="First Time ke IKEA"
+                                        class="w-full h-full object-cover object-center">
+                                    <span
+                                        class="absolute top-2 left-2 bg-black/60 text-white text-[9px] px-2 py-0.5 rounded-full backdrop-blur-sm font-medium">Bab
+                                        04</span>
+                                    <button
+                                        onclick="event.stopPropagation(); openPhotoModal('./images/memory-4.jpg', 'First time ke IKEA dan langsung bareng kamu')"
+                                        class="absolute top-2 right-2 bg-black/60 hover:bg-black/80 text-white text-[10px] p-1.5 rounded-full backdrop-blur-sm transition"
+                                        title="Lihat Foto">🔍</button>
+                                    <span
+                                        class="absolute bottom-2 right-2 bg-black/60 text-white text-[9px] px-2 py-0.5 rounded-full backdrop-blur-sm">sentuh
+                                        untuk balik 🔄</span>
+                                </div>
+                                <div
+                                    class="h-9 flex items-center justify-center text-center font-serif italic text-xs sm:text-[13px] text-stone-700 px-1 truncate w-full">
+                                    "first time ke IKEA bareng kamu 🛋️"
+                                </div>
+                            </div>
+
+                            <!-- Back Card -->
+                            <div
+                                class="polaroid-back absolute inset-0 bg-gradient-to-br from-[#2a1a24] to-[#181116] p-3.5 sm:p-4 rounded-2xl backface-hidden rotate-y-180 flex flex-col justify-between border border-rose-300/30 text-rose-50 shadow-xl text-left overflow-hidden">
+                                <div class="flex-1 overflow-y-auto custom-scrollbar pr-1 flex flex-col justify-start">
+                                    <span
+                                        class="text-[9px] uppercase tracking-widest text-romantic-gold font-semibold">Bab
+                                        04 &bull; Petualangan Kita</span>
+                                    <h4
+                                        class="font-serif text-sm sm:text-base text-rose-100 font-medium leading-tight mt-0.5">
+                                        First Time ke IKEA 🛋️</h4>
+                                    <p class="text-xs text-stone-200 mt-2 font-light leading-relaxed italic">
+                                        "INI FIRST TIME AKU KE IKEA DAN LANGSUNG SAMA KAMUUUU, senangg banget bisa
+                                        kesana sama kamu, nyobain makanan dan juga jalan jalan di ikea, SERUUUU
+                                        BANGETTTT YEYEYEYEYEYYYY"
+                                    </p>
+                                </div>
+                                <div
+                                    class="pt-2 mt-2 border-t border-white/10 flex items-center justify-around shrink-0">
+                                    <button onclick="event.stopPropagation(); triggerReactionBurst('🥳', this)"
+                                        class="hover:scale-125 transition text-lg p-1 cursor-pointer">🥳</button>
+                                    <button onclick="event.stopPropagation(); triggerReactionBurst('🛋️', this)"
+                                        class="hover:scale-125 transition text-lg p-1 cursor-pointer">🛋️</button>
+                                    <button onclick="event.stopPropagation(); triggerReactionBurst('🥰', this)"
+                                        class="hover:scale-125 transition text-lg p-1 cursor-pointer">🥰</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- FOTO 5: Mam Sushi & Ramen -->
+                    <div class="polaroid-wrapper perspective-1000 cursor-pointer w-full select-none"
+                        onclick="flipPolaroid(this)">
+                        <div
+                            class="polaroid-inner relative w-full h-[330px] sm:h-[350px] rounded-2xl transform-style-3d transition-transform duration-700 shadow-xl">
+
+                            <!-- Front Card -->
+                            <div
+                                class="polaroid-front polaroid-frame absolute inset-0 rounded-2xl backface-hidden flex flex-col justify-between text-stone-800 p-2.5 sm:p-3 overflow-hidden bg-white shadow-lg">
+                                <div
+                                    class="w-full h-56 sm:h-60 rounded-xl overflow-hidden bg-stone-900 relative shrink-0">
+                                    <img src="./images/memory-5.jpg" alt="Mam Sushi dan Ramen"
+                                        class="w-full h-full object-cover object-center">
+                                    <span
+                                        class="absolute top-2 left-2 bg-black/60 text-white text-[9px] px-2 py-0.5 rounded-full backdrop-blur-sm font-medium">Bab
+                                        05</span>
+                                    <button
+                                        onclick="event.stopPropagation(); openPhotoModal('./images/memory-5.jpg', 'Mam sushi dan ramen bareng kamu')"
+                                        class="absolute top-2 right-2 bg-black/60 hover:bg-black/80 text-white text-[10px] p-1.5 rounded-full backdrop-blur-sm transition"
+                                        title="Lihat Foto">🔍</button>
+                                    <span
+                                        class="absolute bottom-2 right-2 bg-black/60 text-white text-[9px] px-2 py-0.5 rounded-full backdrop-blur-sm">sentuh
+                                        untuk balik 🔄</span>
+                                </div>
+                                <div
+                                    class="h-9 flex items-center justify-center text-center font-serif italic text-xs sm:text-[13px] text-stone-700 px-1 truncate w-full">
+                                    "mam sushi & ramen berdua 🍣🍜"
+                                </div>
+                            </div>
+
+                            <!-- Back Card -->
+                            <div
+                                class="polaroid-back absolute inset-0 bg-gradient-to-br from-[#2a1a24] to-[#181116] p-3.5 sm:p-4 rounded-2xl backface-hidden rotate-y-180 flex flex-col justify-between border border-rose-300/30 text-rose-50 shadow-xl text-left overflow-hidden">
+                                <div class="flex-1 overflow-y-auto custom-scrollbar pr-1 flex flex-col justify-start">
+                                    <span
+                                        class="text-[9px] uppercase tracking-widest text-romantic-gold font-semibold">Bab
+                                        05 &bull; Kulineran Berdua</span>
+                                    <h4
+                                        class="font-serif text-sm sm:text-base text-rose-100 font-medium leading-tight mt-0.5">
+                                        Mam Sushi & Ramen 🍣🍜</h4>
+                                    <p class="text-xs text-stone-200 mt-2 font-light leading-relaxed italic">
+                                        "Yeyyyy mammm sushi dan ramennnn, mauu lagii mammm inii nantii sama kamuuu,
+                                        nantii kita mammm inii lagi lebih banyakk yaaa sayangkuuu saat aku sudah punya
+                                        uang lebih banyakk"
+                                    </p>
+                                </div>
+                                <div
+                                    class="pt-2 mt-2 border-t border-white/10 flex items-center justify-around shrink-0">
+                                    <button onclick="event.stopPropagation(); triggerReactionBurst('🍣', this)"
+                                        class="hover:scale-125 transition text-lg p-1 cursor-pointer">🍣</button>
+                                    <button onclick="event.stopPropagation(); triggerReactionBurst('🍜', this)"
+                                        class="hover:scale-125 transition text-lg p-1 cursor-pointer">🍜</button>
+                                    <button onclick="event.stopPropagation(); triggerReactionBurst('🥺', this)"
+                                        class="hover:scale-125 transition text-lg p-1 cursor-pointer">🥺</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- FOTO 6: First Time Makan Bareng -->
+                    <div class="polaroid-wrapper perspective-1000 cursor-pointer w-full select-none"
+                        onclick="flipPolaroid(this)">
+                        <div
+                            class="polaroid-inner relative w-full h-[330px] sm:h-[350px] rounded-2xl transform-style-3d transition-transform duration-700 shadow-xl">
+
+                            <!-- Front Card -->
+                            <div
+                                class="polaroid-front polaroid-frame absolute inset-0 rounded-2xl backface-hidden flex flex-col justify-between text-stone-800 p-2.5 sm:p-3 overflow-hidden bg-white shadow-lg">
+                                <div
+                                    class="w-full h-56 sm:h-60 rounded-xl overflow-hidden bg-stone-900 relative shrink-0">
+                                    <img src="./images/memory-6.jpg" alt="Makan Bareng Pertama Kali"
+                                        class="w-full h-full object-cover object-center">
+                                    <span
+                                        class="absolute top-2 left-2 bg-black/60 text-white text-[9px] px-2 py-0.5 rounded-full backdrop-blur-sm font-medium">Bab
+                                        06</span>
+                                    <button
+                                        onclick="event.stopPropagation(); openPhotoModal('./images/memory-6.jpg', 'First time makan bareng kamu')"
+                                        class="absolute top-2 right-2 bg-black/60 hover:bg-black/80 text-white text-[10px] p-1.5 rounded-full backdrop-blur-sm transition"
+                                        title="Lihat Foto">🔍</button>
+                                    <span
+                                        class="absolute bottom-2 right-2 bg-black/60 text-white text-[9px] px-2 py-0.5 rounded-full backdrop-blur-sm">sentuh
+                                        untuk balik 🔄</span>
+                                </div>
+                                <div
+                                    class="h-9 flex items-center justify-center text-center font-serif italic text-xs sm:text-[13px] text-stone-700 px-1 truncate w-full">
+                                    "bahagia makan bareng kamu 🤍"
+                                </div>
+                            </div>
+
+                            <!-- Back Card -->
+                            <div
+                                class="polaroid-back absolute inset-0 bg-gradient-to-br from-[#2a1a24] to-[#181116] p-3.5 sm:p-4 rounded-2xl backface-hidden rotate-y-180 flex flex-col justify-between border border-rose-300/30 text-rose-50 shadow-xl text-left overflow-hidden">
+                                <div class="flex-1 overflow-y-auto custom-scrollbar pr-1 flex flex-col justify-start">
+                                    <span
+                                        class="text-[9px] uppercase tracking-widest text-romantic-gold font-semibold">Bab
+                                        06 &bull; Momen Berharga</span>
+                                    <h4
+                                        class="font-serif text-sm sm:text-base text-rose-100 font-medium leading-tight mt-0.5">
+                                        Bahagia Makan Bareng Kamu 🤍</h4>
+                                    <p class="text-xs text-stone-200 mt-2 font-light leading-relaxed italic">
+                                        "Jujur makanan nya bukan yang enak bangett sayang, tapi karna ini first time DAN
+                                        MAKAN BARENG KAMU, jadinyaa aku bahagiaa bangetttttttt sayangg"
+                                    </p>
+                                </div>
+                                <div
+                                    class="pt-2 mt-2 border-t border-white/10 flex items-center justify-around shrink-0">
+                                    <button onclick="event.stopPropagation(); triggerReactionBurst('🤍', this)"
+                                        class="hover:scale-125 transition text-lg p-1 cursor-pointer">🤍</button>
+                                    <button onclick="event.stopPropagation(); triggerReactionBurst('🥰', this)"
+                                        class="hover:scale-125 transition text-lg p-1 cursor-pointer">🥰</button>
+                                    <button onclick="event.stopPropagation(); triggerReactionBurst('✨', this)"
+                                        class="hover:scale-125 transition text-lg p-1 cursor-pointer">✨</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- FOTO 7: Muka Masih Unyu Banget (Baru Pacaran) -->
+                    <div class="polaroid-wrapper perspective-1000 cursor-pointer w-full select-none"
+                        onclick="flipPolaroid(this)">
+                        <div
+                            class="polaroid-inner relative w-full h-[330px] sm:h-[350px] rounded-2xl transform-style-3d transition-transform duration-700 shadow-xl">
+
+                            <!-- Front Card -->
+                            <div
+                                class="polaroid-front polaroid-frame absolute inset-0 rounded-2xl backface-hidden flex flex-col justify-between text-stone-800 p-2.5 sm:p-3 overflow-hidden bg-white shadow-lg">
+                                <div
+                                    class="w-full h-56 sm:h-60 rounded-xl overflow-hidden bg-stone-900 relative shrink-0">
+                                    <img src="./images/memory-7.jpg" alt="Muka Kita Masih Unyu"
+                                        class="w-full h-full object-cover object-center">
+                                    <span
+                                        class="absolute top-2 left-2 bg-black/60 text-white text-[9px] px-2 py-0.5 rounded-full backdrop-blur-sm font-medium">Bab
+                                        07</span>
+                                    <button
+                                        onclick="event.stopPropagation(); openPhotoModal('./images/memory-7.jpg', 'Muka kita masih unyu banget baru pacaran')"
+                                        class="absolute top-2 right-2 bg-black/60 hover:bg-black/80 text-white text-[10px] p-1.5 rounded-full backdrop-blur-sm transition"
+                                        title="Lihat Foto">🔍</button>
+                                    <span
+                                        class="absolute bottom-2 right-2 bg-black/60 text-white text-[9px] px-2 py-0.5 rounded-full backdrop-blur-sm">sentuh
+                                        untuk balik 🔄</span>
+                                </div>
+                                <div
+                                    class="h-9 flex items-center justify-center text-center font-serif italic text-xs sm:text-[13px] text-stone-700 px-1 truncate w-full">
+                                    "muka kita masih unyu banget 🎒"
+                                </div>
+                            </div>
+
+                            <!-- Back Card -->
+                            <div
+                                class="polaroid-back absolute inset-0 bg-gradient-to-br from-[#2a1a24] to-[#181116] p-3.5 sm:p-4 rounded-2xl backface-hidden rotate-y-180 flex flex-col justify-between border border-rose-300/30 text-rose-50 shadow-xl text-left overflow-hidden">
+                                <div class="flex-1 overflow-y-auto custom-scrollbar pr-1 flex flex-col justify-start">
+                                    <span
+                                        class="text-[9px] uppercase tracking-widest text-romantic-gold font-semibold">Bab
+                                        07 &bull; Awal Pacaran</span>
+                                    <h4
+                                        class="font-serif text-sm sm:text-base text-rose-100 font-medium leading-tight mt-0.5">
+                                        Muka Kita Masih Unyu 🥺</h4>
+                                    <p class="text-xs text-stone-200 mt-2 font-light leading-relaxed italic">
+                                        "HAHAHAHA MUKA KITAAA MASIHH UNYU BANGETTT, ini kitaa abis ini malu malu tau
+                                        sayang karna foto seperti ini, bener bener seperti orang baru banget pacaran
+                                        sayangggggg. kangennn"
+                                    </p>
+                                </div>
+                                <div
+                                    class="pt-2 mt-2 border-t border-white/10 flex items-center justify-around shrink-0">
+                                    <button onclick="event.stopPropagation(); triggerReactionBurst('😂', this)"
+                                        class="hover:scale-125 transition text-lg p-1 cursor-pointer">😂</button>
+                                    <button onclick="event.stopPropagation(); triggerReactionBurst('🥺', this)"
+                                        class="hover:scale-125 transition text-lg p-1 cursor-pointer">🥺</button>
+                                    <button onclick="event.stopPropagation(); triggerReactionBurst('🤍', this)"
+                                        class="hover:scale-125 transition text-lg p-1 cursor-pointer">🤍</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- FOTO 8: Makan Seafood Malam & Komuk Lucu -->
+                    <div class="polaroid-wrapper perspective-1000 cursor-pointer w-full select-none"
+                        onclick="flipPolaroid(this)">
+                        <div
+                            class="polaroid-inner relative w-full h-[330px] sm:h-[350px] rounded-2xl transform-style-3d transition-transform duration-700 shadow-xl">
+
+                            <!-- Front Card -->
+                            <div
+                                class="polaroid-front polaroid-frame absolute inset-0 rounded-2xl backface-hidden flex flex-col justify-between text-stone-800 p-2.5 sm:p-3 overflow-hidden bg-white shadow-lg">
+                                <div
+                                    class="w-full h-56 sm:h-60 rounded-xl overflow-hidden bg-stone-900 relative shrink-0">
+                                    <img src="./images/memory-8.jpg" alt="Komuk Lucu Seafood"
+                                        class="w-full h-full object-cover object-center">
+                                    <span
+                                        class="absolute top-2 left-2 bg-black/60 text-white text-[9px] px-2 py-0.5 rounded-full backdrop-blur-sm font-medium">Bab
+                                        08</span>
+                                    <button
+                                        onclick="event.stopPropagation(); openPhotoModal('./images/memory-8.jpg', 'Komuk lucu kamu pas makan seafood malam-malam')"
+                                        class="absolute top-2 right-2 bg-black/60 hover:bg-black/80 text-white text-[10px] p-1.5 rounded-full backdrop-blur-sm transition"
+                                        title="Lihat Foto">🔍</button>
+                                    <span
+                                        class="absolute bottom-2 right-2 bg-black/60 text-white text-[9px] px-2 py-0.5 rounded-full backdrop-blur-sm">sentuh
+                                        untuk balik 🔄</span>
+                                </div>
+                                <div
+                                    class="h-9 flex items-center justify-center text-center font-serif italic text-xs sm:text-[13px] text-stone-700 px-1 truncate w-full">
+                                    "komuk kamu lucu banget biii 😜"
+                                </div>
+                            </div>
+
+                            <!-- Back Card -->
+                            <div
+                                class="polaroid-back absolute inset-0 bg-gradient-to-br from-[#2a1a24] to-[#181116] p-3.5 sm:p-4 rounded-2xl backface-hidden rotate-y-180 flex flex-col justify-between border border-rose-300/30 text-rose-50 shadow-xl text-left overflow-hidden">
+                                <div class="flex-1 overflow-y-auto custom-scrollbar pr-1 flex flex-col justify-start">
+                                    <span
+                                        class="text-[9px] uppercase tracking-widest text-romantic-gold font-semibold">Bab
+                                        08 &bull; Seafood Malam</span>
+                                    <h4
+                                        class="font-serif text-sm sm:text-base text-rose-100 font-medium leading-tight mt-0.5">
+                                        Komuk Lucu Sayangku 😜</h4>
+                                    <p class="text-xs text-stone-200 mt-2 font-light leading-relaxed italic">
+                                        "ini pas kita ke seafood ituuu sayang, malamm malammmm. KOMUK KAMU LUCUUU
+                                        BANGETTTT BIIII SUKAAAAAA, aku gemas sendiri pas lihat foto kamu yang iniii,
+                                        walaupun muka nya kayak ngeledekin akuu, tapi akuuu sukaaaa karnaa gemassss"
+                                    </p>
+                                </div>
+                                <div
+                                    class="pt-2 mt-2 border-t border-white/10 flex items-center justify-around shrink-0">
+                                    <button onclick="event.stopPropagation(); triggerReactionBurst('😜', this)"
+                                        class="hover:scale-125 transition text-lg p-1 cursor-pointer">😜</button>
+                                    <button onclick="event.stopPropagation(); triggerReactionBurst('😂', this)"
+                                        class="hover:scale-125 transition text-lg p-1 cursor-pointer">😂</button>
+                                    <button onclick="event.stopPropagation(); triggerReactionBurst('🥰', this)"
+                                        class="hover:scale-125 transition text-lg p-1 cursor-pointer">🥰</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- FOTO 9: First Time Mam Pepper Lunch & Bahagia Bareng Kamu -->
+                    <div class="polaroid-wrapper perspective-1000 cursor-pointer w-full select-none"
+                        onclick="flipPolaroid(this)">
+                        <div
+                            class="polaroid-inner relative w-full h-[330px] sm:h-[350px] rounded-2xl transform-style-3d transition-transform duration-700 shadow-xl">
+
+                            <!-- Front Card -->
+                            <div
+                                class="polaroid-front polaroid-frame absolute inset-0 rounded-2xl backface-hidden flex flex-col justify-between text-stone-800 p-2.5 sm:p-3 overflow-hidden bg-white shadow-lg">
+                                <div
+                                    class="w-full h-56 sm:h-60 rounded-xl overflow-hidden bg-stone-900 relative shrink-0">
+                                    <img src="./images/memory-9.jpg" alt="Makan Bareng Bahagia"
+                                        class="w-full h-full object-cover object-center">
+                                    <span
+                                        class="absolute top-2 left-2 bg-black/60 text-white text-[9px] px-2 py-0.5 rounded-full backdrop-blur-sm font-medium">Bab
+                                        09</span>
+                                    <button
+                                        onclick="event.stopPropagation(); openPhotoModal('./images/memory-9.jpg', 'Senang banget bisa ngajak kamu makan ke sini')"
+                                        class="absolute top-2 right-2 bg-black/60 hover:bg-black/80 text-white text-[10px] p-1.5 rounded-full backdrop-blur-sm transition"
+                                        title="Lihat Foto">🔍</button>
+                                    <span
+                                        class="absolute bottom-2 right-2 bg-black/60 text-white text-[9px] px-2 py-0.5 rounded-full backdrop-blur-sm">sentuh
+                                        untuk balik 🔄</span>
+                                </div>
+                                <div
+                                    class="h-9 flex items-center justify-center text-center font-serif italic text-xs sm:text-[13px] text-stone-700 px-1 truncate w-full">
+                                    "first time mam ini bareng kamu 🥩"
+                                </div>
+                            </div>
+
+                            <!-- Back Card -->
+                            <div
+                                class="polaroid-back absolute inset-0 bg-gradient-to-br from-[#2a1a24] to-[#181116] p-3.5 sm:p-4 rounded-2xl backface-hidden rotate-y-180 flex flex-col justify-between border border-rose-300/30 text-rose-50 shadow-xl text-left overflow-hidden">
+                                <div class="flex-1 overflow-y-auto custom-scrollbar pr-1 flex flex-col justify-start">
+                                    <span
+                                        class="text-[9px] uppercase tracking-widest text-romantic-gold font-semibold">Bab
+                                        09 &bull; Makan Enak Berdua</span>
+                                    <h4
+                                        class="font-serif text-sm sm:text-base text-rose-100 font-medium leading-tight mt-0.5">
+                                        Bahagia Makan Bareng Kamu 🤍</h4>
+                                    <p class="text-xs text-stone-200 mt-2 font-light leading-relaxed italic">
+                                        "Lagi lagi ini first time akuu sayang mammm inii, senangg banget karna aku bisa
+                                        ngajak kamu makan ke sini, sebelum ini kita abisss fotoo sayang, aku lihat kamu
+                                        di foto ini bahagia bangettt karna kamu kelihatan sangat sangatt senanggggg. I
+                                        Love U sayangggkuuu cintaaa"
+                                    </p>
+                                </div>
+                                <div
+                                    class="pt-2 mt-2 border-t border-white/10 flex items-center justify-around shrink-0">
+                                    <button onclick="event.stopPropagation(); triggerReactionBurst('🤍', this)"
+                                        class="hover:scale-125 transition text-lg p-1 cursor-pointer">🤍</button>
+                                    <button onclick="event.stopPropagation(); triggerReactionBurst('🥰', this)"
+                                        class="hover:scale-125 transition text-lg p-1 cursor-pointer">🥰</button>
+                                    <button onclick="event.stopPropagation(); triggerReactionBurst('✨', this)"
+                                        class="hover:scale-125 transition text-lg p-1 cursor-pointer">✨</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Bottom Button to Climax -->
+            <div class="mt-3 shrink-0">
+                <button onclick="goToPage(6)"
+                    class="px-8 py-3 rounded-full bg-gradient-to-r from-rose-900/80 via-rose-800 to-rose-950 border border-romantic-gold/60 hover:border-romantic-gold text-xs sm:text-sm tracking-[0.2em] uppercase text-rose-100 hover:text-white transition-all duration-300 shadow-2xl active:scale-95 cursor-pointer group">
+                    <span class="flex items-center gap-2">
+                        <span>Lanjut ke Puncak Acara: Tiup Lilin 🎂</span>
+                        <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+                    </span>
+                </button>
+            </div>
+
+        </section>
+
+
+        <!-- ======================================================== -->
+        <!-- HALAMAN 6: CLIMAX (KUE, LILIN & SURAT CINTA TYPEWRITER)  -->
+        <!-- ======================================================== -->
+        <section id="page-6" class="page-screen w-full max-w-lg hidden flex-col items-center text-center">
+            <div class="glass-box p-6 sm:p-9 rounded-3xl border border-white/10 w-full relative">
+
+                <!-- Cake & Lit Candle -->
+                <div class="relative my-3 flex flex-col items-center">
+                    <div id="candle-container" class="cursor-pointer group z-20 -mb-2" onclick="blowCandle()">
+                        <div id="candle-flame" class="w-4 h-7 mx-auto relative flex items-center justify-center">
+                            <div
+                                class="w-3.5 h-6 bg-gradient-to-t from-orange-500 via-amber-400 to-yellow-200 rounded-full flame-active">
+                            </div>
+                        </div>
+                        <div id="candle-smoke"
+                            class="hidden absolute -top-8 left-1/2 -translate-x-1/2 text-stone-400 text-xl select-none">
+                            ~ 💨
+                        </div>
+                        <div
+                            class="w-2.5 h-10 bg-gradient-to-b from-rose-200 to-rose-300 rounded-t-sm mx-auto relative border border-white/20">
+                            <div class="absolute -top-1.5 left-1/2 -translate-x-1/2 w-0.5 h-1.5 bg-stone-700"></div>
+                        </div>
+                    </div>
+                    <div class="text-5xl select-none -mt-1">
+                        🎂
+                    </div>
+                </div>
+
+                <h2 class="font-serif text-3xl sm:text-4xl text-rose-50 font-normal mb-1">
+                    Happy Birthday, Sayangku!
+                </h2>
+
+                <p id="cake-instruction" class="text-xs text-rose-300/90 mb-4 font-light">
+                    Make a wish di dalam hatimu ya sayangku, lalu sentuh lilinnya 🕯️
+                </p>
+
+                <button onclick="blowCandle()" id="candle-btn"
+                    class="bg-gradient-to-r from-rose-900/70 to-rose-950/90 hover:from-rose-800 hover:to-rose-900 border border-romantic-gold/50 px-8 py-3 rounded-xl text-xs sm:text-sm tracking-widest uppercase transition-all shadow-xl mb-4 active:scale-95 text-rose-100 cursor-pointer">
+                    Tiup Lilin 💨
+                </button>
+
+                <!-- Typewriter Letter Parchment -->
+                <div id="love-letter"
+                    class="hidden text-left bg-black/45 border border-white/10 p-5 sm:p-7 rounded-2xl text-sm leading-relaxed text-stone-200 font-light shadow-inner mt-3 max-h-[46vh] overflow-y-auto custom-scrollbar">
+
+                    <div class="flex items-center justify-between pb-3 mb-3 border-b border-white/10">
+                        <p class="font-serif text-xl sm:text-2xl text-romantic-gold font-normal">Untuk sayangku
+                            tersayang,</p>
+                        <span class="text-sm text-rose-300">🤍</span>
+                    </div>
+
+                    <p id="typewriter-text"
+                        class="typewriter-cursor whitespace-pre-line leading-relaxed text-xs sm:text-sm font-serif text-rose-50/95">
+                    </p>
+
+                    <div class="mt-5 pt-4 border-t border-white/10 flex justify-between items-end">
+                        <span class="text-[11px] text-stone-400 italic">selamanya untukmu,</span>
+                        <p class="font-script text-2xl text-romantic-gold">Dari aku yang selalu menyayangimu 🤍</p>
+                    </div>
+
+                    <div class="mt-5 text-center">
+                        <button onclick="sendVirtualHug()"
+                            class="px-6 py-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-rose-400/30 text-xs text-rose-200 hover:text-white transition active:scale-95 cursor-pointer">
+                            Kirim Peluk Hangat ke Sayangku 🤗
+                        </button>
+                        <p id="hug-status" class="text-xs text-romantic-gold mt-2 hidden"></p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Subtle Footer -->
+    <footer
+        class="fixed bottom-2 inset-x-0 text-center py-2 text-[10px] sm:text-xs text-stone-500 tracking-widest uppercase pointer-events-none z-10">
+        ✦ dibuat dengan sepenuh hati, khusus untuk sayangku 🤍 ✦
+    </footer>
+
+
+    <!-- ================= JAVASCRIPT LOGIC ================= -->
+    <script>
+        /* ========================================================
+           1. MUSIK & NAVIGASI HALAMAN (STRICTLY SEPARATED SCREENS)
+           ======================================================== */
+        let isMusicPlaying = false;
+        const bgMusic = document.getElementById('bgMusic');
+        bgMusic.volume = 0.3; // Default 30% lembut
+
+        function toggleMusic(forcePlay = null) {
+            const shouldPlay = forcePlay !== null ? forcePlay : !isMusicPlaying;
+            if (shouldPlay) {
+                bgMusic.volume = 0.3;
+                bgMusic.play().then(() => {
+                    isMusicPlaying = true;
+                    document.getElementById('musicText').innerText = "Music On";
+                    document.getElementById('musicIcon').innerText = "🎶";
+                    document.getElementById('audioWave').classList.remove('hidden');
+                }).catch(() => { });
+            } else {
+                bgMusic.pause();
+                isMusicPlaying = false;
+                document.getElementById('musicText').innerText = "Music Off";
+                document.getElementById('musicIcon').innerText = "🎵";
+                document.getElementById('audioWave').classList.add('hidden');
+            }
+        }
+
+        let currentPage = 1;
+        const pageNames = [
+            "",
+            "pembuka kado 🎁",
+            "game 1: tangkap hati 💖",
+            "game 2: tebak kata (3 soal) 💭",
+            "game 3: tebak tempat (3 foto) 📸",
+            "memory lane kita 🌸",
+            "surat untuk sayangku 💌"
+        ];
+
+        function goToPage(targetPage) {
+            // Auto-play music on first interaction
+            if (!isMusicPlaying && targetPage >= 2) {
+                toggleMusic(true);
+            }
+
+            const currentEl = document.getElementById(`page-${currentPage}`);
+            const nextEl = document.getElementById(`page-${targetPage}`);
+
+            if (currentEl && nextEl) {
+                // Smooth transition
+                gsap.to(currentEl, {
+                    opacity: 0,
+                    scale: 0.96,
+                    duration: 0.4,
+                    ease: "power2.inOut",
+                    onComplete: () => {
+                        currentEl.classList.add('hidden');
+                        currentEl.classList.remove('flex');
+                        currentEl.style.opacity = '1';
+                        currentEl.style.transform = 'none';
+
+                        currentPage = targetPage;
+                        nextEl.classList.remove('hidden');
+                        nextEl.classList.add('flex');
+
+                        // Update indicator
+                        const indicator = document.getElementById('page-indicator');
+                        if (indicator && pageNames[targetPage]) {
+                            indicator.innerText = pageNames[targetPage];
+                        }
+
+                        gsap.fromTo(nextEl,
+                            { opacity: 0, scale: 1.04 },
+                            { opacity: 1, scale: 1, duration: 0.5, ease: "power2.out" }
+                        );
+                    }
+                });
+            }
+        }
+
+
+        /* ========================================================
+           2. COUNTDOWN TIMER KE 16 NOVEMBER
+           ======================================================== */
+        function startCountdownTimer() {
+            const now = new Date();
+            let target = new Date(now.getFullYear(), 10, 16, 0, 0, 0); // 16 November
+            if (now > target && now.getMonth() > 10) {
+                target = new Date(now.getFullYear() + 1, 10, 16, 0, 0, 0);
+            }
+
+            function updateTime() {
+                const diff = target - new Date();
+                if (diff > 0) {
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                    document.getElementById('timer-days').innerText = String(days).padStart(2, '0');
+                    document.getElementById('timer-hours').innerText = String(hours).padStart(2, '0');
+                    document.getElementById('timer-minutes').innerText = String(minutes).padStart(2, '0');
+                    document.getElementById('timer-seconds').innerText = String(seconds).padStart(2, '0');
+                } else {
+                    document.getElementById('timer-days').innerText = "00";
+                    document.getElementById('timer-hours').innerText = "00";
+                    document.getElementById('timer-minutes').innerText = "00";
+                    document.getElementById('timer-seconds').innerText = "00";
+                }
+            }
+            setInterval(updateTime, 1000);
+            updateTime();
+        }
+        startCountdownTimer();
+
+        /* ========================================================
+           GIFT BOX LOCK / UNLOCK — aktif saat 16 November 2026 00:00
+           ======================================================== */
+        (function checkGiftBoxLock() {
+            const target = new Date(2026, 10, 16, 0, 0, 0); // 16 Nov 2026 00:00
+            const btn = document.getElementById('gift-box-btn');
+            const msg = document.getElementById('gift-lock-msg');
+
+            function applyState() {
+                const isTime = new Date() >= target;
+                if (isTime) {
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
+                    btn.classList.add('hover:scale-105', 'active:scale-95', 'cursor-pointer', 'hover:border-romantic-gold');
+                    if (msg) msg.innerText = "Hari ini harinya sayangku! Yuk buka kejutannya 🎁 ✨";
+                }
+            }
+
+            applyState();
+            setInterval(applyState, 1000);
+        })();
+
+
+        /* ========================================================
+           3. GAME 1: TANGKAP HATI (CATCH THE 5 HEARTS)
+           ======================================================== */
+        let caughtHearts = 0;
+
+        function catchHeart(heartEl) {
+            if (heartEl.dataset.caught === "true") return;
+            heartEl.dataset.caught = "true";
+            caughtHearts++;
+
+            gsap.to(heartEl, {
+                scale: 1.6,
+                opacity: 0,
+                y: -30,
+                duration: 0.35,
+                ease: "power2.out",
+                onComplete: () => {
+                    heartEl.style.visibility = 'hidden';
+                }
+            });
+
+            // Burst confetti at heart position
+            confetti({
+                particleCount: 15,
+                spread: 35,
+                origin: {
+                    x: heartEl.getBoundingClientRect().left / window.innerWidth,
+                    y: heartEl.getBoundingClientRect().top / window.innerHeight
+                },
+                colors: ['#e89da8', '#d4af37']
+            });
+
+            document.getElementById('hearts-counter').innerText = `${caughtHearts} / 5 Hati`;
+
+            if (caughtHearts >= 5) {
+                setTimeout(() => {
+                    document.getElementById('game-1-success').classList.remove('hidden');
+                }, 400);
+            }
+        }
+
+
+        /* ========================================================
+           4. GAME 2: TEBAK-TEBAKAN DIKETIK (3 SOAL LENGKAP)
+           ======================================================== */
+        const quizData = [
+            {
+                q: "Tempat makan favorit yang sering kita datengin dari dulu?",
+                a: ["mcd", "mekdi", "mcdonalds", "mcdonald's", "mcdonald"],
+                hint: "Petunjuk: Restoran cepat saji warna merah-kuning andalan kita berdua 🍟"
+            },
+            {
+                q: "Tempat yang selalu kamu ucapin kalau aku tanya mau kemana?",
+                a: ["blok m", "pim", "blokm", "pondok indah mall"],
+                hint: "Petunjuk: Mall atau tempat nongkrong andalan yang pasti kamu sebut pertama kali 🛍️"
+            },
+            {
+                q: "Kata pertama aku setelah aku denger kamu mau kesana?",
+                a: ["hehe", "ketawa", "ummmm", "ummm", "umm", "sayang", "boleh", "next", "ga", "ngga", "nggak"],
+                hint: "Petunjuk: Reaksi spontan atau ketawa kecil aku tiap denger tempat itu 😆"
+            }
+        ];
+        let currentQuizIndex = 0;
+
+        function showQuizHint() {
+            const hintEl = document.getElementById('quiz-hint');
+            hintEl.innerText = quizData[currentQuizIndex].hint;
+            hintEl.classList.remove('hidden');
+        }
+
+        function checkQuizAnswer() {
+            const input = document.getElementById('quiz-input');
+            const err = document.getElementById('quiz-error');
+            const rawVal = input.value;
+            const cleanVal = rawVal.toLowerCase().replace(/[.,!?'"\/\\-]/g, '').trim();
+            const acceptable = quizData[currentQuizIndex].a;
+
+            const isCorrect = acceptable.some(word => {
+                const cleanWord = word.toLowerCase().trim();
+                return cleanVal === cleanWord || cleanVal.includes(cleanWord);
+            });
+
+            if (isCorrect && cleanVal !== "") {
+                err.classList.add('hidden');
+                document.getElementById('quiz-hint').classList.add('hidden');
+                input.value = "";
+
+                confetti({
+                    particleCount: 25,
+                    spread: 45,
+                    origin: { y: 0.6 },
+                    colors: ['#d4af37', '#e89da8']
+                });
+
+                currentQuizIndex++;
+
+                if (currentQuizIndex < quizData.length) {
+                    document.getElementById('quiz-progress').innerText = `Pertanyaan ${currentQuizIndex + 1} dari 3`;
+                    document.getElementById('quiz-question').innerText = quizData[currentQuizIndex].q;
+                } else {
+                    document.getElementById('quiz-question').innerText = "Semua pertanyaan terjawab benar!";
+                    document.getElementById('quiz-input').parentElement.classList.add('hidden');
+                    document.querySelector('#page-3 .flex.gap-2').classList.add('hidden');
+                    document.getElementById('quiz-success-box').classList.remove('hidden');
+                }
+            } else {
+                err.classList.remove('hidden');
+                input.classList.add('border-rose-500');
+                setTimeout(() => input.classList.remove('border-rose-500'), 1000);
+            }
+        }
+
+
+        /* ========================================================
+           5. GAME 3: TEBAK TEMPAT DARI FOTO (3 TEMPAT BERTURUT-TURUT)
+           ======================================================== */
+        const photoTriviaData = [
+            {
+                title: "Tebak Ini Pas Kita Dimana? (maaf sayang fotonya ga full)",
+                desc: "Clue: first date kita berdua 🤍",
+                image: "./images/game-place-1.jpg",
+                caption: "berdiri di samping dinding seni...",
+                answers: ["galnas", "galeri nasional", "galeri nasional indonesia"],
+                hint: "Petunjuk: Galeri seni tempat first date kita (singkatannya g____s) 🏛️"
+            },
+            {
+                title: "Inii Dimanaaaa Sayang? 🦐",
+                desc: "Inii waktu malam malam sayang yang aku ke rumah kamuu",
+                image: "./images/game-place-2.jpg",
+                caption: "nyammm nyammm...",
+                answers: ["seafood", "seafood graha", "seafood graha raya", "graha", "graha raya"],
+                hint: "Petunjuk: Makan di G____ R___ 🦐"
+            },
+            {
+                title: "Tempat Paling Berkesan Buat Aku 🛋️",
+                desc: "Inii salah satu tempat yang paling berkesan buat akuu jujurrrr 🤍",
+                image: "./images/game-place-3.jpg",
+                caption: "mirror selfie di lorong toko...",
+                answers: ["ikea"],
+                hint: "Petunjuk: Toko perabot warna biru-kuning🛋️"
+            }
+        ];
+        let currentPhotoIndex = 0;
+
+        function showPhotoTriviaHint() {
+            const hintEl = document.getElementById('photo-trivia-hint');
+            hintEl.innerText = photoTriviaData[currentPhotoIndex].hint;
+            hintEl.classList.remove('hidden');
+        }
+
+        function checkPhotoTriviaAnswer() {
+            const input = document.getElementById('photo-trivia-input');
+            const err = document.getElementById('photo-trivia-error');
+            const rawVal = input.value;
+            const cleanVal = rawVal.toLowerCase().replace(/[.,!?'"\/\\-]/g, '').trim();
+            const acceptable = photoTriviaData[currentPhotoIndex].answers;
+
+            const isCorrect = acceptable.some(word => {
+                const cleanWord = word.toLowerCase().trim();
+                return cleanVal === cleanWord || cleanVal.includes(cleanWord);
+            });
+
+            if (isCorrect && cleanVal !== "") {
+                err.classList.add('hidden');
+                document.getElementById('photo-trivia-hint').classList.add('hidden');
+                input.value = "";
+
+                confetti({
+                    particleCount: 25,
+                    spread: 45,
+                    origin: { y: 0.6 },
+                    colors: ['#d4af37', '#e89da8']
+                });
+
+                currentPhotoIndex++;
+
+                if (currentPhotoIndex < photoTriviaData.length) {
+                    const nextData = photoTriviaData[currentPhotoIndex];
+                    document.getElementById('photo-trivia-progress').innerText = `Tempat ${currentPhotoIndex + 1} dari 3`;
+                    document.getElementById('photo-trivia-title').innerText = nextData.title;
+                    document.getElementById('photo-trivia-desc').innerText = nextData.desc;
+                    document.getElementById('photo-trivia-img').src = nextData.image;
+                    document.getElementById('photo-trivia-caption').innerText = `"${nextData.caption}"`;
+                } else {
+                    document.getElementById('photo-trivia-title').innerText = "Semua Tempat Berhasil Ditebak!";
+                    document.getElementById('photo-trivia-desc').innerText = "Ingatan sayangku luar biasa!";
+                    document.getElementById('photo-trivia-input').parentElement.classList.add('hidden');
+                    document.querySelector('#page-4 .flex.gap-2').classList.add('hidden');
+                    document.getElementById('photo-trivia-success-box').classList.remove('hidden');
+                }
+            } else {
+                err.classList.remove('hidden');
+                input.classList.add('border-rose-500');
+                setTimeout(() => input.classList.remove('border-rose-500'), 1000);
+            }
+        }
+
+
+        /* ========================================================
+           6. INTERAKSI POLAROID 3D FLIP, ZOOM MODAL & REAKSI EMOJI
+           ======================================================== */
+        function flipPolaroid(wrapperEl) {
+            const inner = wrapperEl.querySelector('.polaroid-inner');
+            if (inner) {
+                inner.classList.toggle('rotate-y-180');
+            }
+        }
+
+        function openPhotoModal(src, caption) {
+            document.getElementById('photo-modal-img').src = src;
+            document.getElementById('photo-modal-caption').innerText = caption || '';
+            const modal = document.getElementById('photo-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closePhotoModal() {
+            const modal = document.getElementById('photo-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function triggerReactionBurst(emoji, btnEl) {
+            const rect = btnEl.getBoundingClientRect();
+            for (let i = 0; i < 6; i++) {
+                const bubble = document.createElement('span');
+                bubble.innerText = emoji;
+                bubble.className = 'fixed text-xl pointer-events-none z-50 select-none';
+                bubble.style.left = `${rect.left + 8}px`;
+                bubble.style.top = `${rect.top}px`;
+                document.body.appendChild(bubble);
+
+                gsap.to(bubble, {
+                    y: -80 - Math.random() * 50,
+                    x: (Math.random() - 0.5) * 70,
+                    opacity: 0,
+                    scale: 1.5,
+                    duration: 1 + Math.random() * 0.4,
+                    ease: 'power2.out',
+                    onComplete: () => bubble.remove()
+                });
+            }
+        }
+
+
+        /* ========================================================
+           7. TIUP LILIN & SURAT CINTA TYPEWRITER
+           ======================================================== */
+        let isCandleBlown = false;
+
+        function blowCandle() {
+            if (isCandleBlown) return;
+            isCandleBlown = true;
+
+            const flame = document.getElementById('candle-flame');
+            const smoke = document.getElementById('candle-smoke');
+            const btn = document.getElementById('candle-btn');
+            const instruction = document.getElementById('cake-instruction');
+
+            flame.classList.add('hidden');
+            smoke.classList.remove('hidden');
+            instruction.innerText = "Lilin telah padam, semua doamu telah melangit ✨";
+
+            btn.innerText = "Lilin Padam ✨ (Doa Terkabul)";
+            btn.disabled = true;
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+
+            // Heart & Gold Confetti Burst
+            confetti({
+                particleCount: 110,
+                spread: 85,
+                origin: { y: 0.6 },
+                colors: ['#d4af37', '#e89da8', '#f43f5e', '#ffffff']
+            });
+
+            // Reveal letter
+            setTimeout(() => {
+                const letter = document.getElementById('love-letter');
+                letter.classList.remove('hidden');
+                startTypewriter();
+            }, 600);
+        }
+
+        const loveLetterText = `Hai sayangkuu cintakuu, selamat ulang tahun yaa 🤍
+
+Terima kasih banyak sudah lahir ke dunia ini dan memilih bareng akuuu terussss. Kehadiran kamu di hidup aku adalah salah satu hal terbaik dan paling aku syukuri setiap harinya.
+
+Di usia kamu yang baru ini(tuaaaaa), doa aku sederhana: semoga kamu selalu sehat, hati kamu selalu tenang, dan semua hal baik yang lagi kamu perjuangkan bisa tercapai satu per satu dengan indahhh.
+
+Aku mau kamu tahu, secapek apa pun hari-hari aku atau hari-hari yang kamu lewati, kamu gak pernah sendirian. Aku bakal selalu ada di sini, nemenin kamu di setiap kamu ketawa, dan siap jadi tempat pulang ternyaman buat kamu waktu kamu lagi cape ataupunn sedihhh bii.
+
+Selamat ulang tahun yaaa, bidadariku. Aku sayang banget sama kamuuu, sayangkuuu 🤍`;
+
+        let charIndex = 0;
+
+        function startTypewriter() {
+            const el = document.getElementById('typewriter-text');
+            if (charIndex < loveLetterText.length) {
+                el.innerHTML += loveLetterText.charAt(charIndex);
+                charIndex++;
+                setTimeout(startTypewriter, 34);
+            }
+        }
+
+        let hugCount = 0;
+        function sendVirtualHug() {
+            hugCount++;
+            const status = document.getElementById('hug-status');
+            status.classList.remove('hidden');
+            status.innerText = `🤗 Pelukan hangat ke-${hugCount} sudah sampai ke sayangku!`;
+
+            confetti({
+                particleCount: 25,
+                spread: 45,
+                origin: { y: 0.75 },
+                colors: ['#e89da8', '#d4af37']
+            });
+        }
+
+        function unlockGiftGate() {
+            confetti({
+                particleCount: 40,
+                spread: 60,
+                origin: { y: 0.6 },
+                colors: ['#e89da8', '#d4af37']
+            });
+            goToPage(2);
+        }
+
+
+        // Ambient Stars Canvas
+        const canvas = document.getElementById('ambientStars');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+
+        function resizeStars() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            stars = [];
+            for (let i = 0; i < 40; i++) {
+                stars.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 1.2 + 0.3,
+                    alpha: Math.random(),
+                    speed: Math.random() * 0.01 + 0.003
+                });
+            }
+        }
+
+        function drawStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stars.forEach(s => {
+                s.alpha += s.speed;
+                if (s.alpha > 1 || s.alpha < 0) s.speed = -s.speed;
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(212, 175, 55, ${Math.abs(s.alpha) * 0.5})`;
+                ctx.fill();
+            });
+            requestAnimationFrame(drawStars);
+        }
+
+        window.addEventListener('resize', resizeStars);
+        resizeStars();
+        drawStars();
+    </script>
+</body>
+
+</html>
