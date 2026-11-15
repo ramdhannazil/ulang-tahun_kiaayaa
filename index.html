@@ -1318,22 +1318,22 @@
         startCountdownTimer();
 
         /* ========================================================
-           GIFT BOX LOCK / UNLOCK — aktif saat 16 November 2026 00:00
+           GIFT BOX LOCK / UNLOCK — Non-aktifkan countdown (Selalu Terbuka)
            ======================================================== */
         (function checkGiftBoxLock() {
-            const target = new Date(2026, 10, 16, 0, 0, 0); // 16 Nov 2026 00:00
             const btn = document.getElementById('gift-box-btn');
             const msg = document.getElementById('gift-lock-msg');
 
-            function applyState() {
-                const isTime = new Date() >= target;
-                if (isTime) {
-                    btn.disabled = false;
-                    btn.classList.remove('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
-                    btn.classList.add('hover:scale-105', 'active:scale-95', 'cursor-pointer', 'hover:border-romantic-gold');
-                    if (msg) msg.innerText = "Hari ini harinya sayangku! Yuk buka kejutannya 🎁 ✨";
-                }
+            // Langsung aktifkan tombol kado tanpa batasan waktu
+            if (btn) {
+                btn.disabled = false;
+                btn.classList.remove('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
+                btn.classList.add('hover:scale-105', 'active:scale-95', 'cursor-pointer', 'hover:border-romantic-gold');
             }
+            if (msg) {
+                msg.innerText = "Yey, kado siap dibuka! Yuk klik kotaknya 🎁 ✨";
+            }
+        })();
 
             applyState();
             setInterval(applyState, 1000);
